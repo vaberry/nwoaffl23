@@ -1,13 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
-from django.views.generic.base import View
-from . import forms
-from . import models
-from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.views import LoginView
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.views.generic.base import View
 from dotenv import load_dotenv
+from . import forms
+from . import models
 import os
+
 load_dotenv()
 
 class Login(LoginView):
