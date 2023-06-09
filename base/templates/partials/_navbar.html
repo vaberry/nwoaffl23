@@ -1,6 +1,15 @@
 {% load static %}
 
 {% if user.is_authenticated %}
+
+<style>
+    .btn-outline-secondary {
+        /* color: #fff; */
+        /* border-color: #fff; */
+        width: 100px;
+    }
+</style>
+
 <link rel="stylesheet" href="{% static 'base/css/style.css' %}">
 <div class="container mt-5">
     <div class="row">
@@ -17,7 +26,7 @@
                         <li class="nav-item mt-3 mt-md-0">
                             <a href="{% url 'home' %}" class="btn btn-outline-secondary m-1 {% if request.path == '/' %}active{% endif %}">Home</a>
                         </li>
-                        {% if user.is_authenticated %}
+                        {% if user == commissioner %}
                         <li class="nav-item">
                             <a href="{% url 'commissioner' %}" class="btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'commissioner' %}active{% endif %}">Commish</a>
                         </li>
@@ -41,7 +50,7 @@
             </div>
         </nav>
     </div>
-    <div class="row text-center mt-5 mb-3">
+    <div class="row text-center mt-3 mb-3">
         <div class="col">
             <img src="{% static 'base/img/football.png' %}" alt="" srcset="">
         </div>

@@ -16,7 +16,7 @@ def navbar_context(request):
     context = {
         'commissioner': commissioner.owner if commissioner else None,
         'user_team_pk': user_team_pk,
-        'teams': Team.objects.all(),
+        'teams': Team.objects.all().order_by('draft_order'),
         'user_team': user_team,
     }
 

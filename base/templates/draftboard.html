@@ -1,12 +1,68 @@
 {% extends 'index.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block content %}
+
+<style>
+    .team-pic {
+        width: 60px !important;
+        height: 60px !important;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+</style>
 
 <div class="container">
     <div class="row">
         <div class="col">
             <h1 class="h1 text-center">2023 Draftboard</h1><hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" style="overflow-x: scroll;">
+            <div class="container mb-3">
+                <table class="table-responsive table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            {% for team in teams %}
+                            <th class="text-center">
+                                <div class="m-3" style="height: 150px; overflow-y: hidden;">
+                                    <img class="team-pic mb-1" src="{{team.profile_picture.url}}" alt=""><br>
+                                    <p>{{team.name}}</p>
+                                </div>
+                            </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in 15|create_range %}
+                        <tr>
+                            <td class="bg-primary text-center">{{ i }}</td>
+                            {% for pick in picks %}
+                            {% if pick.round == i %}
+                            <td class="text-center">
+                                {% if pick.original_owner == pick.current_owner %}
+                                    <a class="btn btn-outline-secondary" style="height: 125px; width: 100px;" href="{% url 'team' pick.original_owner.pk %}">
+                                        {{pick.round}}.{{pick.number}}<br>
+                                        {{pick.current_owner}}
+                                    </a>
+                                {% else %}
+                                    <a class="btn btn-outline-warning" style="height: 125px; width: 100px;" href="{% url 'team' pick.current_owner.pk %}">
+                                        {{pick.round}}.{{pick.number}}<br>
+                                        {{pick.current_owner}}
+                                    </a>
+                                {% endif %}
+                            </td>
+                            {% endif %}
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

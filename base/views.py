@@ -86,4 +86,8 @@ class Trade(LoginRequiredMixin,View):
 class Draftboard(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         if request.method == "GET":
-            return render(request, 'draftboard.html')
+            picks_2023 = models.Pick.objects.filter(year=2023).order_by('round', 'number')
+            context = {
+                'picks': picks_2023,
+            }
+            return render(request, 'draftboard.html', context=context)
