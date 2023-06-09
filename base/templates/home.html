@@ -3,6 +3,12 @@
 
 {% block content %}
 
+<style>
+    .no-decoration {
+        text-decoration: none;
+        color: inherit;
+    }
+</style>
 <div class="container mb-5">
     <div class="row">
         <div class="col">
@@ -11,15 +17,15 @@
     </div>
     <div class="row">
         <div class="col">
-            <h2 class="h2 text-center">League</h2>
+            <h2 class="h2 text-center mb-5">League</h2>
             <div class="container">
                 <div class="row">
                     {% for team in teams %}
-                    <div class="col-3 col-md-2 text-center">
-                        <a href="{% url 'team' team.pk %}">
-                            <img class="navbar-profile-img" src="{{ team.profile_picture.url }}" alt="">
+                    <div class="col-3 col-md-2 text-center mb-3 mb-md-0">
+                        <a class="no-decoration" href="{% url 'team' team.pk %}">
+                            <img class="navbar-profile-img mb-2" src="{{ team.profile_picture.url }}" alt="">
+                            <h5 class="d-none d-md-block">{{team}}</h5>
                         </a>
-                        <h5>{{team}}</h5>
                     </div>
                     {% endfor %}
                 </div>
