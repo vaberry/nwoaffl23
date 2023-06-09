@@ -1,9 +1,20 @@
+{% load static %}
+
 <div class="container mt-5">
     <div class="row">
-        <div class="col-12 d-flex justify-content-end">
-            <a href="{% url 'home' %}" class="btn btn-outline-primary">Home</a>
-            <a href="{% url 'commissioner' %}" class="btn btn-outline-primary">Commissioner</a>
-            <a href="{% url 'trade' %}" class="btn btn-outline-primary">Trade</a>
+        {% if user.is_authenticated and user == commissioner %}
+        <div class="col d-flex justify-content-end">
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary m-1">Home</a>
+            <a href="{% url 'commissioner' %}" class="btn btn-outline-secondary m-1">Commissioner</a>
+            <a href="{% url 'team' user_pk %}" class="btn btn-outline-secondary m-1">Team</a>
+            <a href="{% url 'trade' %}" class="btn btn-outline-secondary m-1">Trade</a>
+            <a href="{% url 'logout' %}" class="btn btn-outline-secondary m-1">Logout</a>
+        </div>
+        {% endif %}
+    </div>
+    <div class="row text-center mt-5">
+        <div class="col">
+            <img src="{% static 'base/favicon.ico' %}" alt="" srcset="">
         </div>
     </div>
 </div>
