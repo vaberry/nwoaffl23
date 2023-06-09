@@ -28,7 +28,9 @@ class Register(View):
     def post(self, request, *args, **kwargs):
         if request.method == "POST":
             form = forms.RegistrationForm(request.POST)
+            print('REGISTERING...')
             if form.is_valid():
+                print('FORM IS VALID')
                 email = form.cleaned_data.get('email')
                 if User.objects.filter(email=email).exists():
                     form.add_error('email', 'This email is already registered.')
@@ -79,3 +81,8 @@ class Trade(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         if request.method == "GET":
             return render(request, 'trade.html')
+        
+class Draftboard(LoginRequiredMixin,View):
+    def get(self, request, *args, **kwargs):
+        if request.method == "GET":
+            return render(request, 'draftboard.html')

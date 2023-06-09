@@ -1,20 +1,49 @@
 {% load static %}
+<link rel="stylesheet" href="{% static 'base/css/style.css' %}">
 
 <div class="container mt-5">
     <div class="row">
-        {% if user.is_authenticated and user == commissioner %}
-        <div class="col d-flex justify-content-end">
-            <a href="{% url 'home' %}" class="btn btn-outline-secondary m-1">Home</a>
-            <a href="{% url 'commissioner' %}" class="btn btn-outline-secondary m-1">Commish</a>
-            <a href="{% url 'team' user_pk %}" class="btn btn-outline-secondary m-1">Team</a>
-            <a href="{% url 'trade' %}" class="btn btn-outline-secondary m-1">Trade</a>
-            <a href="{% url 'logout' %}" class="btn btn-outline-secondary m-1">Logout</a>
-        </div>
-        {% endif %}
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="" href="{% url 'home' %}">
+                    <img class="navbar-profile-img" src="{% if team.profile_pic %}{{ team.profile_pic.url }}{% else %}{% static 'base/img/default.png' %}{% endif %}"/>
+                </a>
+                <button class="navbar-toggler bg-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item mt-3 mt-md-0">
+                            <a href="{% url 'home' %}" class="btn btn-outline-secondary m-1 {% if request.path == '/' %}active{% endif %}">Home</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a href="{% url 'commissioner' %}" class="btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'commissioner' %}active{% endif %}">Commish</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a href="{% url 'draftboard' %}" class="btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'draftboard' %}active{% endif %}">Draftboard</a>
+                        </li>
+                        {% if user_team_pk %}
+                        <li class="nav-item">
+                            <a href="{% url 'team' user_team_pk %}" class="btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'team' %}active{% endif %}">Team</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a href="{% url 'trade' %}" class="btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'trade' %}active{% endif %}">Trade</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'logout' %}" class="btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'logout' %}active{% endif %}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </div>
-    <div class="row text-center mt-5">
+    <div class="row text-center mt-5 mb-3">
         <div class="col">
-            <img src="{% static 'base/favicon.ico' %}" alt="" srcset="">
+            <img src="{% static 'base/img/football.png' %}" alt="" srcset="">
         </div>
     </div>
 </div>
+

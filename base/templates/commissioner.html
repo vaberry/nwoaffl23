@@ -29,6 +29,16 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="basic-addon1">{{i}}</span>
                     </div>
+                    <select name="{{i}}" class="btn btn-secondary form-select" aria-label="Default select example">
+                        <option disabled>Select a team</option>
+                        {% for team in teams %}
+                        {% if team.draft_order == i %}
+                        <option value="{{team}}" selected>{{ team }}</option>
+                        {% else %}
+                        <option value="{{team}}">{{ team }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
                 </div>
                 {% endfor %}
                 <button class="btn btn-primary w-100 mt-3" name="update-draft-order" type="submit">Submit</button>

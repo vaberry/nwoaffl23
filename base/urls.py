@@ -7,6 +7,7 @@ urlpatterns = [
    path('commissioner/', views.Commissioner.as_view(), name='commissioner'),
    path('trade/', views.Trade.as_view(), name='trade'),
    path('team/<int:team_pk>/', views.Team.as_view(), name='team'),
+   path('draftboard/', views.Draftboard.as_view(), name='draftboard'),
    
    path('login/', views.Login.as_view(), name='login'),
    path('logout/', LogoutView.as_view(), name='logout'),
