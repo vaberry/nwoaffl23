@@ -72,8 +72,9 @@ class Commissioner(LoginRequiredMixin,View):
 class Team(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         if request.method == "GET":
+            team = models.Team.objects.get(pk=kwargs.get('team_pk'))
             context = {
-                'team_pk' : kwargs.get('team_pk'),
+                'team' : team,
             }
             return render(request, 'team.html', context=context)
         

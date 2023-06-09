@@ -1,14 +1,15 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'base/css/style.css' %}">
 
+{% if user.is_authenticated %}
+<link rel="stylesheet" href="{% static 'base/css/style.css' %}">
 <div class="container mt-5">
     <div class="row">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a class="" href="{% url 'home' %}">
-                    <img class="navbar-profile-img" src="{% if team.profile_pic %}{{ team.profile_pic.url }}{% else %}{% static 'base/img/default.png' %}{% endif %}"/>
+                <a class="ms-3 ms-md-0" href="{% url 'home' %}">
+                    <img class="navbar-profile-img" src="{% if user_team.profile_picture %}{{ user_team.profile_picture.url }}{% else %}{% static 'base/img/default.png' %}{% endif %}"/>
                 </a>
-                <button class="navbar-toggler bg-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler bg-secondary me-3 me-md-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
@@ -46,4 +47,4 @@
         </div>
     </div>
 </div>
-
+{% endif %}
