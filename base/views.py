@@ -78,11 +78,77 @@ class Team(LoginRequiredMixin,View):
             }
             return render(request, 'team.html', context=context)
         
-class Trade(LoginRequiredMixin,View):
+class TradeLobby(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         if request.method == "GET":
-            return render(request, 'trade.html')
+            trades = models.Trade.objects.all()
+            context = {
+                'trades': trades,
+            }
+            return render(request, 'trade_lobby.html', context=context)
         
+    def post(self, request, *args, **kwargs):
+        if request.method == "POST":
+            if "create-trade" in request.POST:
+                trade_partner = models.Team.objects.get(name=request.POST.get('trade-partner'))
+                user_team = models.Team.objects.get(owner=request.user)
+                new_trade = models.Trade.objects.create(
+                    team_one=user_team,
+                    team_two=trade_partner,
+                )
+                new_trade.save()
+                return redirect('trade-room', trade_pk=new_trade.pk)
+            return redirect('trade')
+
+class TradeRoom(LoginRequiredMixin,View):
+    def get(self, request, *args, **kwargs):
+        if request.method == "GET":
+            trade = models.Trade.objects.get(pk=kwargs.get('trade_pk'))
+            team_one_picks = models.Pick.objects.filter(current_owner=trade.team_one)
+            team_two_picks = models.Pick.objects.filter(current_owner=trade.team_two)
+            context = {
+                'trade': trade,
+                'team_one_picks': team_one_picks,
+                'team_two_picks': team_two_picks,
+            }
+            return render(request, 'trade_room.html', context=context)
+    
+    def post(self, request, *args, **kwargs):
+        if request.method == "POST":
+            trade = models.Trade.objects.get(pk=kwargs.get('trade_pk'))
+            if "delete-trade" in request.POST:
+                trade.delete()
+                return redirect('trade-lobby')
+            # elif "add-player" in request.POST:
+            #     player = models.Player.objects.get(pk=request.POST.get('player'))
+            #     trade.players.add(player)
+            #     trade.save()
+            # elif "remove-player" in request.POST:
+            #     player = models.Player.objects.get(pk=request.POST.get('player'))
+            #     trade.players.remove(player)
+            #     trade.save()
+            # elif "add-pick" in request.POST:
+            #     pick = models.Pick.objects.get(pk=request.POST.get('pick'))
+            #     trade.picks.add(pick)
+            #     trade.save()
+            # elif "remove-pick" in request.POST:
+            #     pick = models.Pick.objects.get(pk=request.POST.get('pick'))
+            #     trade.picks.remove(pick)
+            #     trade.save()
+            # elif "submit-trade" in request.POST:
+            #     trade.status = "Pending"
+            #     trade.save()
+            # elif "accept-trade" in request.POST:
+            #     trade.status = "Accepted"
+            #     trade.save()
+            # elif "reject-trade" in request.POST:
+            #     trade.status = "Rejected"
+            #     trade.save()
+            # elif "cancel-trade" in request.POST:
+            #     trade.status = "Cancelled"
+            #     trade.save()
+            return redirect('trade-room', trade_pk=trade.pk)
+
 class Draftboard(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         if request.method == "GET":

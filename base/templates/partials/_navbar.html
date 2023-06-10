@@ -6,12 +6,13 @@
     .btn-outline-secondary {
         /* color: #fff; */
         /* border-color: #fff; */
-        width: 100px;
+        /* width: 100px; */
+        border: none;
     }
 </style>
 
 <link rel="stylesheet" href="{% static 'base/css/style.css' %}">
-<div class="container mt-5">
+<div class="container mt-3">
     <div class="row">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
@@ -40,7 +41,7 @@
                         </li>
                         {% endif %}
                         <li class="nav-item">
-                            <a href="{% url 'trade' %}" class="btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'trade' %}active{% endif %}">Trade</a>
+                            <a href="{% url 'trade-lobby' %}" class="btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'trade-lobby' %}active{% elif request.resolver_match.view_name == 'trade-room' %}active{% endif %}">Trade</a>
                         </li>
                         <li class="nav-item">
                             <a href="{% url 'logout' %}" class="btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'logout' %}active{% endif %}">Logout</a>

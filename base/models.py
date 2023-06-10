@@ -51,7 +51,7 @@ class Trade(models.Model):
     status = models.CharField(max_length=255, choices=STATUS_CHOICES)
     team_one = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='trades_team_one')
     team_one_accepted = models.BooleanField(default=False)
-    team_two = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='trades_team_two')
+    team_two = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='trades_team_two', blank=True, null=True)
     team_two_accepted = models.BooleanField(default=False)
     team_one_sends = models.ManyToManyField(Pick, related_name='trade_team_one_sends')
     team_two_sends = models.ManyToManyField(Pick, related_name='trade_team_two_sends')

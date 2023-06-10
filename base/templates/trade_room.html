@@ -1,0 +1,85 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="h1 text-center">Trade</h1><hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-4 text-center">
+            <h3 class="h3">Team 1 Picks</h3>
+            <h5>{{ trade.team_one }}</h5><hr>            
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 text-center">
+                        <h5>2023</h5><hr>
+                        {% for pick in team_one_picks %}
+                        {% if pick.year == 2023 %}
+                        <div class="row">
+                            <h5>{{ pick.round }}.{{ pick.number }}</h5>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="col-6 text-center">
+                        <h5>2024</h5><hr>
+                        {% for pick in team_one_picks %}
+                        {% if pick.year == 2024 %}
+                        <div class="row">
+                            <h5>{{ pick.round }}.{{ pick.number }}</h5>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-12 col-md-4 text-center">
+            <h3 class="h3 text-center">Team 2 Picks</h3>
+            <h5>{{ trade.team_two }}</h5><hr>            
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 text-center">
+                        <h5>2023</h5><hr>
+                        {% for pick in team_two_picks %}
+                        {% if pick.year == 2023 %}
+                        <div class="row">
+                            <h5>{{ pick.round }}.{{ pick.number }}</h5>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="col-6 text-center">
+                        <h5>2024</h5><hr>
+                        {% for pick in team_one_picks %}
+                        {% if pick.year == 2024 %}
+                        <div class="row">
+                            <h5>{{ pick.round }}.{{ pick.number }}</h5>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <h3 class="h3 text-center">Trade Card</h3>
+        </div>
+    </div>
+    <div class="row text-center mt-5 mb-5">
+        <div class="col">
+            <form action="" method="post">
+                {% csrf_token %}
+                <button name="delete-trade" class="btn btn-outline-danger w-25" type="submit">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
