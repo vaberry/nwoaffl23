@@ -29,7 +29,7 @@
                             <form action="" method="post">
                                 {% csrf_token %}
                                 <input name="pick" type="hidden" name="" value="{{pick.pk}}">
-                                <button name="add-pick" class="pick-btn btn btn-outline-secondary" type="submit">{{ pick.round }}.{{ pick.number }} &#8594;</button>
+                                <button name="add-pick" class="{% if trade.status == 'PROPOSED' or trade.status == 'ACCEPTED' or trade.status == 'REJECTED' %}disabled{% elif trade.status == 'COUNTERED' and user != trade.current_proposer.owner%}disabled{% endif %} pick-btn btn btn-outline-secondary" type="submit">{{ pick.round }}.{{ pick.number }} &#8594;</button>
                             </form>
                         </div>
                         {% endif %}
@@ -43,7 +43,7 @@
                             <form action="" method="post">
                                 {% csrf_token %}
                                 <input name="pick" type="hidden" name="" value="{{pick.pk}}">
-                                <button name="add-pick" class="pick-btn btn btn-outline-secondary" type="submit">{{ pick.round }} &#8594;</button>
+                                <button name="add-pick" class="{% if trade.status == 'PROPOSED' or trade.status == 'ACCEPTED' or trade.status == 'REJECTED' %}disabled{% elif trade.status == 'COUNTERED' and user != trade.current_proposer.owner%}disabled{% endif %} pick-btn btn btn-outline-secondary" type="submit">{{ pick.round }} &#8594;</button>
                             </form>
                         </div>
                         {% endif %}
@@ -65,7 +65,7 @@
                             <form action="" method="post">
                                 {% csrf_token %}
                                 <input name="pick" type="hidden" name="" value="{{pick.pk}}">
-                                <button name="add-pick" class="pick-btn btn btn-outline-secondary" type="submit">{{ pick.round }}.{{ pick.number }} &#8594;</button>
+                                <button name="add-pick" class="{% if trade.status == 'PROPOSED' or trade.status == 'ACCEPTED' or trade.status == 'REJECTED' %}disabled{% elif trade.status == 'COUNTERED' and user != trade.current_proposer.owner%}disabled{% endif %} pick-btn btn btn-outline-secondary" type="submit">{{ pick.round }}.{{ pick.number }} &#8594;</button>
                             </form>
                         </div>
                         {% endif %}
@@ -79,7 +79,7 @@
                             <form action="" method="post">
                                 {% csrf_token %}
                                 <input name="pick" type="hidden" name="" value="{{pick.pk}}">
-                                <button name="add-pick" class="pick-btn btn btn-outline-secondary pick-btn" type="submit">{{ pick.round }} &#8594;</button>
+                                <button name="add-pick" class="{% if trade.status == 'PROPOSED' or trade.status == 'ACCEPTED' or trade.status == 'REJECTED' %}disabled{% elif trade.status == 'COUNTERED' and user != trade.current_proposer.owner%}disabled{% endif %} pick-btn btn btn-outline-secondary pick-btn" type="submit">{{ pick.round }} &#8594;</button>
                             </form>
                         </div>
                         {% endif %}
@@ -101,9 +101,9 @@
                                 {% csrf_token %}
                                 <input name="pick" type="hidden" name="" value="{{pick.pk}}">
                                 {% if pick.year == 2023 %}
-                                <button name="remove-pick" class="pick-btn btn btn-outline-success" type="submit">&#8592; {{ pick.year }}.{{ pick.round }}.{{ pick.number }}</button>
+                                <button name="remove-pick" class="{% if trade.status == 'PROPOSED' or trade.status == 'ACCEPTED' or trade.status == 'REJECTED' %}disabled{% elif trade.status == 'COUNTERED' and user != trade.current_proposer.owner%}disabled{% endif %} pick-btn btn btn-outline-success" type="submit">&#8592; {{ pick.year }}.{{ pick.round }}.{{ pick.number }}</button>
                                 {% else %}
-                                <button name="remove-pick" class="pick-btn btn btn-outline-success" type="submit">&#8592; {{ pick.year }}.{{ pick.round }}</button>
+                                <button name="remove-pick" class="{% if trade.status == 'PROPOSED' or trade.status == 'ACCEPTED' or trade.status == 'REJECTED' %}disabled{% elif trade.status == 'COUNTERED' and user != trade.current_proposer.owner%}disabled{% endif %} pick-btn btn btn-outline-success" type="submit">&#8592; {{ pick.year }}.{{ pick.round }}</button>
                                 {% endif %}
                             </form>
                         </div>
@@ -117,9 +117,9 @@
                                 {% csrf_token %}
                                 <input name="pick" type="hidden" name="" value="{{pick.pk}}">
                                 {% if pick.year == 2023 %}
-                                <button name="remove-pick" class="pick-btn btn btn-outline-success" type="submit">&#8592; {{ pick.year }}.{{ pick.round }}.{{ pick.number }}</button>
+                                <button name="remove-pick" class="{% if trade.status == 'PROPOSED' or trade.status == 'ACCEPTED' or trade.status == 'REJECTED' %}disabled{% elif trade.status == 'COUNTERED' and user != trade.current_proposer.owner%}disabled{% endif %} pick-btn btn btn-outline-success" type="submit">&#8592; {{ pick.year }}.{{ pick.round }}.{{ pick.number }}</button>
                                 {% else %}
-                                <button name="remove-pick" class="pick-btn btn btn-outline-success" type="submit">&#8592; {{ pick.year }}.{{ pick.round }}</button>
+                                <button name="remove-pick" class="{% if trade.status == 'PROPOSED' or trade.status == 'ACCEPTED' or trade.status == 'REJECTED' %}disabled{% elif trade.status == 'COUNTERED' and user != trade.current_proposer.owner%}disabled{% endif %} pick-btn btn btn-outline-success" type="submit">&#8592; {{ pick.year }}.{{ pick.round }}</button>
                                 {% endif %}
                             </form>
                         </div>
@@ -131,56 +131,10 @@
 
                 <div class="row mt-3 text-center"><hr>
                     <h3>Status: {{trade.status}}</h3><hr>
-                    {% if trade.status == "STARTED" %}
-                        {% if user == trade.team_one.owner %}
-                            <form action="" method="post">
-                                {% csrf_token %}
-                                <button name="propose" class="pick-btn btn btn-warning" type="submit">Propose</button>
-                            </form>
-                        {% endif %}
-                    {% endif %}
-
-
-
-
-                    {% if trade.status == "PROPOSED" %}
-                        {% if user == trade.team_two.owner %}
-                            <form action="" method="post">
-                                {% csrf_token %}
-                                <button name="accept" class="pick-btn btn btn-success mb-2" type="submit">Accept</button>
-                                <button name="accept" class="pick-btn btn btn-warning mb-2" type="submit">Counter</button>
-                                <button name="decline" class="pick-btn btn btn-danger mb-2" type="submit">Decline</button>
-                            </form>
-                        {% endif %}
-                    {% endif %}
-
-                    {% if trade.status == "ACCEPTED" %}
-                        {% if user == trade.team_one.owner %}
-                            <form action="" method="post">
-                                {% csrf_token %}
-                                <button name="finalize" class="pick-btn btn btn-success" type="submit">Finalize</button>
-                            </form>
-                        {% endif %}
-                    {% endif %}
-
-                    {% if trade.status == "COMPLETED" %}
-                        {% if user == trade.team_one.owner %}
-                            <form action="" method="post">
-                                {% csrf_token %}
-                                <button name="complete" class="pick-btn btn btn-success" type="submit">Complete</button>
-                            </form>
-                        {% endif %}
-                    {% endif %}
-
-
-
-
-                    {% if user == trade.team_one.owner %}
-                        <form action="" method="post">
-                            {% csrf_token %}
-                            <button name="cancel" class="pick-btn btn btn-danger" type="submit">Cancel</button>
-                        </form>
-                    {% endif %}
+                    {% include 'trades/started.html' %}
+                    {% include 'trades/proposed.html' %}
+                    {% include 'trades/countered.html' %}
+                    {% include 'trades/canceled.html' %}
                 </div>
 
 

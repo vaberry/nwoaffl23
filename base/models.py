@@ -46,7 +46,7 @@ class Trade(models.Model):
         ('PROPOSED', 'Proposed'),
         ('COUNTERED', 'Countered'),
         ('COMPLETED', 'Completed'),
-        ('CANCELLED', 'Cancelled'),
+        ('REJECTED', 'Rejected'),
     ]
 
     date_completed = models.DateTimeField(auto_now_add=True)
@@ -57,6 +57,8 @@ class Trade(models.Model):
     team_two_accepted = models.BooleanField(default=False)
     team_one_sends = models.ManyToManyField(Pick, related_name='trade_team_one_sends')
     team_two_sends = models.ManyToManyField(Pick, related_name='trade_team_two_sends')
+    current_proposer = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='current_proposer', default=None, blank=True, null=True)
+    extra_details = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"Trade ID: {self.pk}"

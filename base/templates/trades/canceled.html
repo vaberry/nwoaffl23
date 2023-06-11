@@ -1,0 +1,10 @@
+{% if user == trade.team_one.owner %}
+{% if trade.status != 'REJECTED' %}
+{% if trade.status != 'ACCEPTED' %}
+<form action="" method="post">
+    {% csrf_token %}
+    <button name="cancel" class="pick-btn btn btn-danger" type="submit">Cancel</button>
+</form>
+{% endif %}
+{% endif %}
+{% endif %}

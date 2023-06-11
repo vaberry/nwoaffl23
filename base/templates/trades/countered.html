@@ -1,0 +1,8 @@
+{% if trade.status == "COUNTERED" %}
+{% if user == trade.current_proposer.owner %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <button name="propose" class="pick-btn btn btn-warning m-2" type="submit">Counter</button>
+    </form>
+{% endif %}
+{% endif %}

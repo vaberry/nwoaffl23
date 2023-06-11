@@ -95,6 +95,7 @@ class TradeLobby(LoginRequiredMixin,View):
                 new_trade = models.Trade.objects.create(
                     team_one=user_team,
                     team_two=trade_partner,
+                    current_proposer=user_team,
                 )
                 new_trade.save()
                 return redirect('trade-room', trade_pk=new_trade.pk)
@@ -138,7 +139,31 @@ class TradeRoom(LoginRequiredMixin,View):
 
             elif "propose" in request.POST:
                 trade.status = "PROPOSED"
-                trade.team_one_accepted = True
+                if trade.team_one == trade.current_proposer:
+                    trade.current_proposer = trade.team_two
+                    trade.team_one_accepted = True
+                    trade.team_two_accepted = False
+                elif trade.team_two == trade.current_proposer:
+                    trade.current_proposer = trade.team_one
+                    trade.team_one_accepted = False
+                    trade.team_two_accepted = True
+                trade.save()
+
+            elif "accept" in request.POST:
+                trade.status = "ACCEPTED"
+                trade.team_two_accepted = True
+                trade.save()
+            
+            elif "counter" in request.POST:
+                trade.status = "COUNTERED"
+                trade.team_one_accepted = False
+                trade.team_two_accepted = False
+                trade.save()
+
+            elif "reject" in request.POST:
+                trade.status = "REJECTED"
+                trade.team_one_accepted = False
+                trade.team_two_accepted = False
                 trade.save()
 
             elif "cancel" in request.POST:
