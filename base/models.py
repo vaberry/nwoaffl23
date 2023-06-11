@@ -42,13 +42,15 @@ class Pick(models.Model):
 
 class Trade(models.Model):
     STATUS_CHOICES = [
-        ('PENDING', 'Pending'),
+        ('STARTED', 'Started'),
+        ('PROPOSED', 'Proposed'),
+        ('COUNTERED', 'Countered'),
         ('COMPLETED', 'Completed'),
         ('CANCELLED', 'Cancelled'),
     ]
 
     date_completed = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=255, choices=STATUS_CHOICES)
+    status = models.CharField(max_length=255, choices=STATUS_CHOICES, default='STARTED')
     team_one = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='trades_team_one')
     team_one_accepted = models.BooleanField(default=False)
     team_two = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='trades_team_two', blank=True, null=True)

@@ -3,7 +3,7 @@
 {% if user.is_authenticated %}
 
 <style>
-    .btn-outline-secondary {
+    .nav-btn {
         /* color: #fff; */
         /* border-color: #fff; */
         /* width: 100px; */
@@ -25,26 +25,26 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item mt-3 mt-md-0">
-                            <a href="{% url 'home' %}" class="btn btn-outline-secondary m-1 {% if request.path == '/' %}active{% endif %}">Home</a>
+                            <a href="{% url 'home' %}" class="nav-btn btn btn-outline-secondary m-1 {% if request.path == '/' %}active{% endif %}">Home</a>
                         </li>
                         {% if user == commissioner %}
                         <li class="nav-item">
-                            <a href="{% url 'commissioner' %}" class="btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'commissioner' %}active{% endif %}">Commish</a>
+                            <a href="{% url 'commissioner' %}" class="nav-btn btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'commissioner' %}active{% endif %}">Commish</a>
                         </li>
                         {% endif %}
                         <li class="nav-item">
-                            <a href="{% url 'draftboard' %}" class="btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'draftboard' %}active{% endif %}">Draftboard</a>
+                            <a href="{% url 'draftboard' %}" class="nav-btn btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'draftboard' %}active{% endif %}">Draftboard</a>
                         </li>
                         {% if user_team_pk %}
                         <li class="nav-item">
-                            <a href="{% url 'team' user_team_pk %}" class="btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'team' %}active{% endif %}">Team</a>
+                            <a href="{% url 'team' user_team_pk %}" class="nav-btn btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'team' %}active{% endif %}">Team</a>
                         </li>
                         {% endif %}
                         <li class="nav-item">
-                            <a href="{% url 'trade-lobby' %}" class="btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'trade-lobby' %}active{% elif request.resolver_match.view_name == 'trade-room' %}active{% endif %}">Trade</a>
+                            <a href="{% url 'trade-lobby' %}" class="nav-btn btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'trade-lobby' %}active{% elif request.resolver_match.view_name == 'trade-room' %}active{% endif %}">Trade</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'logout' %}" class="btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'logout' %}active{% endif %}">Logout</a>
+                            <a href="{% url 'logout' %}" class="nav-btn btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'logout' %}active{% endif %}">Logout</a>
                         </li>
                     </ul>
                 </div>

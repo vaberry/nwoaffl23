@@ -3,24 +3,34 @@
 
 {% block content %}
 
-<div class="container">
+<style>
+    .pick-btn {
+        width: 75%;
+    }
+</style>
+<div class="container mb-5">
     <div class="row">
         <div class="col">
             <h1 class="h1 text-center">Trade</h1><hr>
         </div>
     </div>
+
     <div class="row">
-        <div class="col-12 col-md-4 text-center">
-            <h3 class="h3">Team 1 Picks</h3>
-            <h5>{{ trade.team_one }}</h5><hr>            
+
+        <div class="col">
             <div class="container">
+                <h3 class="text-center">{{trade.team_one}}</h3>
                 <div class="row">
                     <div class="col-6 text-center">
                         <h5>2023</h5><hr>
                         {% for pick in team_one_picks %}
-                        {% if pick.year == 2023 %}
+                        {% if pick.year == 2023 and pick not in trade.team_one_sends.all %}
                         <div class="row">
-                            <h5>{{ pick.round }}.{{ pick.number }}</h5>
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <input name="pick" type="hidden" name="" value="{{pick.pk}}">
+                                <button name="add-pick" class="pick-btn btn btn-outline-secondary" type="submit">{{ pick.round }}.{{ pick.number }} &#8594;</button>
+                            </form>
                         </div>
                         {% endif %}
                         {% endfor %}
@@ -28,39 +38,49 @@
                     <div class="col-6 text-center">
                         <h5>2024</h5><hr>
                         {% for pick in team_one_picks %}
-                        {% if pick.year == 2024 %}
+                        {% if pick.year == 2024 and pick not in trade.team_one_sends.all %}
                         <div class="row">
-                            <h5>{{ pick.round }}.{{ pick.number }}</h5>
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <input name="pick" type="hidden" name="" value="{{pick.pk}}">
+                                <button name="add-pick" class="pick-btn btn btn-outline-secondary" type="submit">{{ pick.round }} &#8594;</button>
+                            </form>
                         </div>
                         {% endif %}
                         {% endfor %}
                     </div>
                 </div>
             </div>
-
-
         </div>
-        <div class="col-12 col-md-4 text-center">
-            <h3 class="h3 text-center">Team 2 Picks</h3>
-            <h5>{{ trade.team_two }}</h5><hr>            
+
+        <div class="col">
             <div class="container">
+                <h3 class="text-center">{{trade.team_two}}</h3>
                 <div class="row">
                     <div class="col-6 text-center">
                         <h5>2023</h5><hr>
                         {% for pick in team_two_picks %}
-                        {% if pick.year == 2023 %}
+                        {% if pick.year == 2023 and pick not in trade.team_two_sends.all %}
                         <div class="row">
-                            <h5>{{ pick.round }}.{{ pick.number }}</h5>
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <input name="pick" type="hidden" name="" value="{{pick.pk}}">
+                                <button name="add-pick" class="pick-btn btn btn-outline-secondary" type="submit">{{ pick.round }}.{{ pick.number }} &#8594;</button>
+                            </form>
                         </div>
                         {% endif %}
                         {% endfor %}
                     </div>
                     <div class="col-6 text-center">
                         <h5>2024</h5><hr>
-                        {% for pick in team_one_picks %}
-                        {% if pick.year == 2024 %}
+                        {% for pick in team_two_picks %}
+                        {% if pick.year == 2024 and pick not in trade.team_two_sends.all %}
                         <div class="row">
-                            <h5>{{ pick.round }}.{{ pick.number }}</h5>
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <input name="pick" type="hidden" name="" value="{{pick.pk}}">
+                                <button name="add-pick" class="pick-btn btn btn-outline-secondary pick-btn" type="submit">{{ pick.round }} &#8594;</button>
+                            </form>
                         </div>
                         {% endif %}
                         {% endfor %}
@@ -68,18 +88,110 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-4">
-            <h3 class="h3 text-center">Trade Card</h3>
-        </div>
-    </div>
-    <div class="row text-center mt-5 mb-5">
+
         <div class="col">
-            <form action="" method="post">
-                {% csrf_token %}
-                <button name="delete-trade" class="btn btn-outline-danger w-25" type="submit">Delete</button>
-            </form>
+            <div class="container">
+                <h3 class="text-center">Trade Card</h3>
+                <div class="row">
+                    <div class="col text-center">
+                        <h5>{{trade.team_one}}</h5><hr>
+                        {% for pick in trade.team_one_sends.all %}
+                        <div class="row">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <input name="pick" type="hidden" name="" value="{{pick.pk}}">
+                                {% if pick.year == 2023 %}
+                                <button name="remove-pick" class="pick-btn btn btn-outline-success" type="submit">&#8592; {{ pick.year }}.{{ pick.round }}.{{ pick.number }}</button>
+                                {% else %}
+                                <button name="remove-pick" class="pick-btn btn btn-outline-success" type="submit">&#8592; {{ pick.year }}.{{ pick.round }}</button>
+                                {% endif %}
+                            </form>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="col text-center">
+                        <h5>{{trade.team_two}}</h5><hr>
+                        {% for pick in trade.team_two_sends.all %}
+                        <div class="row">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <input name="pick" type="hidden" name="" value="{{pick.pk}}">
+                                {% if pick.year == 2023 %}
+                                <button name="remove-pick" class="pick-btn btn btn-outline-success" type="submit">&#8592; {{ pick.year }}.{{ pick.round }}.{{ pick.number }}</button>
+                                {% else %}
+                                <button name="remove-pick" class="pick-btn btn btn-outline-success" type="submit">&#8592; {{ pick.year }}.{{ pick.round }}</button>
+                                {% endif %}
+                            </form>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+
+                <div class="row mt-3 text-center"><hr>
+                    <h3>Status: {{trade.status}}</h3><hr>
+                    {% if trade.status == "STARTED" %}
+                        {% if user == trade.team_one.owner %}
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <button name="propose" class="pick-btn btn btn-warning" type="submit">Propose</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+
+
+
+
+                    {% if trade.status == "PROPOSED" %}
+                        {% if user == trade.team_two.owner %}
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <button name="accept" class="pick-btn btn btn-success mb-2" type="submit">Accept</button>
+                                <button name="accept" class="pick-btn btn btn-warning mb-2" type="submit">Counter</button>
+                                <button name="decline" class="pick-btn btn btn-danger mb-2" type="submit">Decline</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if trade.status == "ACCEPTED" %}
+                        {% if user == trade.team_one.owner %}
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <button name="finalize" class="pick-btn btn btn-success" type="submit">Finalize</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if trade.status == "COMPLETED" %}
+                        {% if user == trade.team_one.owner %}
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <button name="complete" class="pick-btn btn btn-success" type="submit">Complete</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+
+
+
+
+                    {% if user == trade.team_one.owner %}
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <button name="cancel" class="pick-btn btn btn-danger" type="submit">Cancel</button>
+                        </form>
+                    {% endif %}
+                </div>
+
+
+
+            </div>
         </div>
+
+
     </div>
+
 </div>
+
 
 {% endblock content %}

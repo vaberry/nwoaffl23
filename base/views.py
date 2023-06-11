@@ -90,8 +90,8 @@ class TradeLobby(LoginRequiredMixin,View):
     def post(self, request, *args, **kwargs):
         if request.method == "POST":
             if "create-trade" in request.POST:
-                trade_partner = models.Team.objects.get(name=request.POST.get('trade-partner'))
                 user_team = models.Team.objects.get(owner=request.user)
+                trade_partner = models.Team.objects.get(name=request.POST.get('trade-partner'))
                 new_trade = models.Trade.objects.create(
                     team_one=user_team,
                     team_two=trade_partner,
@@ -119,34 +119,33 @@ class TradeRoom(LoginRequiredMixin,View):
             if "delete-trade" in request.POST:
                 trade.delete()
                 return redirect('trade-lobby')
-            # elif "add-player" in request.POST:
-            #     player = models.Player.objects.get(pk=request.POST.get('player'))
-            #     trade.players.add(player)
-            #     trade.save()
-            # elif "remove-player" in request.POST:
-            #     player = models.Player.objects.get(pk=request.POST.get('player'))
-            #     trade.players.remove(player)
-            #     trade.save()
-            # elif "add-pick" in request.POST:
-            #     pick = models.Pick.objects.get(pk=request.POST.get('pick'))
-            #     trade.picks.add(pick)
-            #     trade.save()
-            # elif "remove-pick" in request.POST:
-            #     pick = models.Pick.objects.get(pk=request.POST.get('pick'))
-            #     trade.picks.remove(pick)
-            #     trade.save()
-            # elif "submit-trade" in request.POST:
-            #     trade.status = "Pending"
-            #     trade.save()
-            # elif "accept-trade" in request.POST:
-            #     trade.status = "Accepted"
-            #     trade.save()
-            # elif "reject-trade" in request.POST:
-            #     trade.status = "Rejected"
-            #     trade.save()
-            # elif "cancel-trade" in request.POST:
-            #     trade.status = "Cancelled"
-            #     trade.save()
+            elif "add-pick" in request.POST:
+                pick = request.POST.get('pick')
+                pick = models.Pick.objects.get(pk=int(pick))
+                if pick.current_owner == trade.team_one:
+                    trade.team_one_sends.add(pick)
+                elif pick.current_owner == trade.team_two:
+                    trade.team_two_sends.add(pick)
+                trade.save()
+            elif "remove-pick" in request.POST:
+                pick = request.POST.get('pick')
+                pick = models.Pick.objects.get(pk=int(pick))
+                if pick.current_owner == trade.team_one:
+                    trade.team_one_sends.remove(pick)
+                elif pick.current_owner == trade.team_two:
+                    trade.team_two_sends.remove(pick)
+                trade.save()
+
+            elif "propose" in request.POST:
+                trade.status = "PROPOSED"
+                trade.team_one_accepted = True
+                trade.save()
+
+            elif "cancel" in request.POST:
+                trade.status = "CANCELLED"
+                trade.delete()
+                return redirect('trade-lobby')
+            
             return redirect('trade-room', trade_pk=trade.pk)
 
 class Draftboard(LoginRequiredMixin,View):

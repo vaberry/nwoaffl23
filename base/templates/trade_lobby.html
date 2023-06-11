@@ -30,7 +30,11 @@
         <div class="col col-md-6">
             <h2 class="h2 text-center">Your Trades</h2><hr>
             {% for trade in trades %}
+            {% if user == trade.team_one.owner %}
             <a class="btn btn-success" href="{% url 'trade-room' trade.pk %}">{{trade}}</a>
+            {% elif user == trade.team_two.owner and trade.status != 'STARTED' %}
+            <a class="btn btn-success" href="{% url 'trade-room' trade.pk %}">{{trade}}</a>
+            {% endif %}
             {% endfor %}
         </div>
     </div>
