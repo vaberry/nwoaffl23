@@ -30,7 +30,7 @@
                             {% for team in teams %}
                             <th class="text-center">
                                 <div class="m-3" style="height: 150px; overflow-y: hidden;">
-                                    <img class="team-pic mb-1" src="{{team.profile_picture.url}}" alt=""><br>
+                                    <img class="team-pic mb-1" src="{% static pic_dict|get_dict_value:team.owner %}" alt=""><br>
                                     <p>{{team.name}}</p>
                                 </div>
                             </th>
