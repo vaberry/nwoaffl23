@@ -27,7 +27,7 @@
                         <li class="nav-item mt-3 mt-md-0">
                             <a href="{% url 'home' %}" class="nav-btn btn btn-outline-secondary m-1 {% if request.path == '/' %}active{% endif %}">Home</a>
                         </li>
-                        {% if user == commissioner %}
+                        {% if user == commissioner or user.is_superuser %}
                         <li class="nav-item">
                             <a href="{% url 'commissioner' %}" class="nav-btn btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'commissioner' %}active{% endif %}">Commish</a>
                         </li>
