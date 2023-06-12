@@ -82,7 +82,7 @@ class Team(LoginRequiredMixin,View):
 class TradeLobby(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         if request.method == "GET":
-            trades = models.Trade.objects.all()
+            trades = models.Trade.objects.all().order_by('-date_completed')
             context = {
                 'trades': trades,
             }
