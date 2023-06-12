@@ -5,7 +5,7 @@
 
 <style>
     .pick-btn {
-        width: 75%;
+        width: 95%;
     }
 </style>
 <div class="container mb-5">
@@ -131,6 +131,9 @@
 
                 <div class="row mt-3 text-center"><hr>
                     <h3>Status: {{trade.status}}</h3><hr>
+                    {% if trade.status == 'ACCEPTED' %}
+                    <textarea disabled name="trade_details" id="" cols="28" rows="4" placeholder="Enter extra details about the trade...">{% if trade.extra_details != None %}{{trade.extra_details}}{% endif %}</textarea>
+                    {% endif %}
                     {% include 'trades/started.html' %}
                     {% include 'trades/proposed.html' %}
                     {% include 'trades/countered.html' %}
