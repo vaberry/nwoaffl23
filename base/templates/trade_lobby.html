@@ -10,8 +10,8 @@
         </div>
     </div>
     <div class="row">
-        <div class="col col-md-4"></div>
-        <div class="col col-md-4 text-center">
+        <div class="col-0 col-md-4"></div>
+        <div class="col-12 col-md-4 text-center">
             <form action="" method="post">
                 {% csrf_token %}
                 <select name="trade-partner" class="btn btn-secondary form-select" aria-label="Default select example" required>
@@ -23,7 +23,7 @@
                 <button name="create-trade" class="btn btn-primary w-100 mt-3" type="submit">Start Negotiations</button>
             </form>
         </div>
-        <div class="col col-md-4"></div>
+        <div class="col-0 col-md-4"></div>
     </div>
 
     <div class="row mt-5">
@@ -33,7 +33,7 @@
             {% if user == trade.team_one.owner %}
             <a class="btn {% if trade.status != 'ACCEPTED' %}btn-outline-success{% else %}btn-outline-secondary{% endif %} m-1" href="{% url 'trade-room' trade.pk %}">{{trade.date_completed}}<br>{% if user == trade.team_one.owner %}{{trade.team_two}}{% else %}{{trade.team_one}}{% endif %}</a>
             {% elif user == trade.team_two.owner and trade.status != 'STARTED' %}
-            <a class="btn btn-success m-1" href="{% url 'trade-room' trade.pk %}">{{trade}}</a>
+            <a class="btn {% if trade.status != 'ACCEPTED' %}btn-outline-success{% else %}btn-outline-secondary{% endif %} m-1" href="{% url 'trade-room' trade.pk %}">{{trade}}</a>
             {% endif %}
             {% endfor %}
         </div>
