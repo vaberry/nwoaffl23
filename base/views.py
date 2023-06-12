@@ -7,6 +7,7 @@ from django.views.generic.base import View
 from dotenv import load_dotenv
 from . import forms
 from . import models
+from django.db.models import Q
 
 load_dotenv()
 
@@ -83,7 +84,7 @@ class TradeLobby(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         if request.method == "GET":
             trades = models.Trade.objects.all().order_by('-date_completed')
-            user_trades = models.Trade.objects.filter(team_one__owner=request.user, team_two__owner=request.user).order_by('-date_completed')
+            user_trades = models.Trade.objects.filter(Q(team_one__owner=request.user) | Q(team_two__owner=request.user)).order_by('-date_completed')
             context = {
                 'user_trades': user_trades,
                 'trades': trades,
