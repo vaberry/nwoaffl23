@@ -1,5 +1,6 @@
 {% extends 'index.html' %}
 {% load static %}
+{% load cutom_filters %}
 
 {% block content %}
 
@@ -10,6 +11,7 @@
         </div>
     </div>
     <div class="row text-center mb-3">
+        <img class="navbar-profile-img" src="{% if team.profile_picture %}{% static pic_dict|get_dict_value:team.owner %}{% else %}{% static 'base/img/default.png' %}{% endif %}"/>
         <h3>@{{team.name}}</h3>
     </div>
     <div class="row">
