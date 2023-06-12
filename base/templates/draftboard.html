@@ -32,6 +32,10 @@
         object-fit: cover;
         border-radius: 50%;
     }
+    .no-decoration {
+        text-decoration: none;
+        color: inherit;
+    }
 
 </style>
 
@@ -51,8 +55,10 @@
                             {% for team in teams %}
                             <th class="text-center">
                                 <div class="m-3" style="height: 150px; overflow-y: hidden;">
-                                    <img class="team-pic mb-1" src="{% static pic_dict|get_dict_value:team.owner %}" alt=""><br>
-                                    <p>{{team.name}}</p>
+                                    <a class="no-decoration" href="{% url 'team' team.pk %}">
+                                        <img class="team-pic mb-1" src="{% static pic_dict|get_dict_value:team.owner %}" alt=""><br>
+                                        <p>{{team.name}}</p>
+                                    </a>
                                 </div>
                             </th>
                             {% endfor %}
