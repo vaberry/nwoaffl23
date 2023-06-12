@@ -11,6 +11,12 @@
         object-fit: cover;
         border-radius: 50%;
     }
+    .overflow-hidden {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
 </style>
 
 <div class="container">
@@ -30,7 +36,7 @@
             {% if pick.year == 2023 %}
             <div class="row">
                 <div class="col-12">
-                    <h5 class="overflow-hidden">{{pick.round}}.{{pick.number}}{% if pick.current_owner != pick.original_owner %}<span class="text-warning"> - ({{pick.original_owner}})</span>{% else %}<span class="text-secondary"> - ({{pick.original_owner}})</span> {% endif %}</h5>
+                    <h5 class="overflow-hidden">{{pick.round}}.{{pick.number}}<span class="{% if pick.current_owner != pick.original_owner %}text-warning{% else %}text-secondary{% endif %}"> - ({{pick.original_owner}})</span></h5>
                 </div>
             </div>
             {% endif %}
@@ -42,7 +48,7 @@
             {% if pick.year == 2024 %}
             <div class="row">
                 <div class="col-12">
-                    <h5 class="overflow-hidden">{{pick.round}}{% if pick.current_owner != pick.original_owner %}<span class="text-warning"> - ({{pick.original_owner}})</span>{% else %}<span class="text-secondary"> - ({{pick.original_owner}})</span> {% endif %}</h5>
+                    <h5 class="overflow-hidden" style="overflow: hidden;">{{pick.round}}<span class="{% if pick.current_owner != pick.original_owner %}text-warning{% else %}text-secondary{% endif %}"> - ({{pick.original_owner}})</span></h5>
                 </div>
             </div>
             {% endif %}
