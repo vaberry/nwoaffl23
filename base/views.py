@@ -72,7 +72,7 @@ class Team(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         if request.method == "GET":
             team = models.Team.objects.get(pk=kwargs.get('team_pk'))
-            team_picks = models.Pick.objects.filter(current_owner=team)
+            team_picks = models.Pick.objects.filter(current_owner=team).order_by('round', 'pick_number')
             context = {
                 'picks' : team_picks,
                 'team' : team,
