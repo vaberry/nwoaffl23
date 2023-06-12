@@ -23,7 +23,8 @@
         height: 1px;
         background-image: linear-gradient(to right, transparent, #6C757D, transparent);
         background-size: 6px 1px;
-        width: 50%;
+        max-width: 300px;
+        min-width: 150px;
         /* background-repeat: repeat-x; */
     }
     .line-break span {
@@ -50,7 +51,7 @@
     </div>
     <div class="row">
         <div class="col-6">
-            <h4 class="text-center">2023 Picks</h4><hr>
+            <h4 class="">2023 Picks</h4><hr>
             {% for pick in picks %}
             {% if pick.year == 2023 %}
             <div class="row">
@@ -67,7 +68,7 @@
             {% endfor %}
         </div>
         <div class="col-6">
-            <h4 class="text-center">2024 Picks</h4><hr>
+            <h4 class="">2024 Picks</h4><hr>
             {% for pick in picks %}
             {% if pick.year == 2024 %}
             <div class="row">

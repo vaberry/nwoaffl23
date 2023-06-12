@@ -2,7 +2,7 @@
     {% if user == trade.current_proposer.owner %}
         <form action="" method="post">
             {% csrf_token %}
-            <textarea class="mb-2" name="trade_details" id="" cols="28" rows="4" placeholder="Enter extra details about the trade...">{% if trade.extra_details != None %}{{trade.extra_details}}{% endif %}</textarea>
+            <textarea class="w-100" name="trade_details" id="" rows="4" placeholder="Enter extra details about the trade...">{% if trade.extra_details != None %}{{trade.extra_details}}{% endif %}</textarea>
             <button name="accept" class="pick-btn btn btn-success mb-2" type="submit">Accept</button>
             <button name="counter" class="pick-btn btn btn-warning mb-2" type="submit">Counter</button>
             <button name="reject" class="pick-btn btn btn-danger mb-2" type="submit">Reject</button>
