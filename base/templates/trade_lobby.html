@@ -29,12 +29,8 @@
     <div class="row mt-5">
         <div class="col-12 col-md-6">
             <h2 class="h2 text-center">Your Trades</h2><hr>
-            {% for trade in trades %}
-            {% if user == trade.team_one.owner %}
-            <a class="btn {% if trade.status != 'ACCEPTED' %}btn-outline-success{% else %}btn-outline-secondary{% endif %} m-1" href="{% url 'trade-room' trade.pk %}">{{trade.date_completed}}<br>{% if user == trade.team_one.owner %}{{trade.team_two}}{% else %}{{trade.team_one}}{% endif %}</a>
-            {% elif user == trade.team_two.owner and trade.status != 'STARTED' %}
-            <a class="btn {% if trade.status != 'ACCEPTED' %}btn-outline-success{% else %}btn-outline-secondary{% endif %} m-1" href="{% url 'trade-room' trade.pk %}">{{trade}}</a>
-            {% endif %}
+            {% for trade in user_trades %}
+            <a class="btn {% if trade.status != 'ACCEPTED' %}btn-outline-success{% else %}btn-outline-secondary{% endif %} m-1" href="{% url 'trade-room' trade.pk %}">{{trade.date_completed}}<br>{{trade.team_one}}<br>{{trade.team_two}}</a>
             {% endfor %}
         </div>
 
