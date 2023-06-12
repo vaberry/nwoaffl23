@@ -7,7 +7,6 @@ from django.views.generic.base import View
 from dotenv import load_dotenv
 from . import forms
 from . import models
-import os
 
 load_dotenv()
 
@@ -73,7 +72,9 @@ class Team(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         if request.method == "GET":
             team = models.Team.objects.get(pk=kwargs.get('team_pk'))
+            team_picks = models.Pick.objects.filter(current_owner=team)
             context = {
+                'picks' : team_picks,
                 'team' : team,
             }
             return render(request, 'team.html', context=context)
@@ -147,23 +148,34 @@ class TradeRoom(LoginRequiredMixin,View):
                     trade.current_proposer = trade.team_one
                     trade.team_one_accepted = False
                     trade.team_two_accepted = True
+                trade.extra_details = request.POST.get('trade_details')
                 trade.save()
 
             elif "accept" in request.POST:
                 trade.status = "ACCEPTED"
+                trade.team_one_accepted = True
                 trade.team_two_accepted = True
+                for pick in trade.team_one_sends.all():
+                    pick.current_owner = trade.team_two
+                    pick.save()
+                for pick in trade.team_two_sends.all():
+                    pick.current_owner = trade.team_one
+                    pick.save()
+                trade.extra_details = request.POST.get('trade_details')
                 trade.save()
             
             elif "counter" in request.POST:
                 trade.status = "COUNTERED"
                 trade.team_one_accepted = False
                 trade.team_two_accepted = False
+                trade.extra_details = request.POST.get('trade_details')
                 trade.save()
 
             elif "reject" in request.POST:
                 trade.status = "REJECTED"
                 trade.team_one_accepted = False
                 trade.team_two_accepted = False
+                trade.extra_details = request.POST.get('trade_details')
                 trade.save()
 
             elif "cancel" in request.POST:

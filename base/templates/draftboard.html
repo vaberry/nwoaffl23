@@ -45,12 +45,12 @@
                             {% if pick.round == i %}
                             <td class="text-center">
                                 {% if pick.original_owner == pick.current_owner %}
-                                    <a class="btn btn-outline-secondary" style="height: 125px; width: 100px;" href="{% url 'team' pick.original_owner.pk %}">
+                                    <a class="btn btn-outline-secondary" style="height: 105px; width: 100px;" href="{% url 'team' pick.original_owner.pk %}">
                                         {{pick.round}}.{{pick.number}}<br>
                                         {{pick.current_owner}}
                                     </a>
                                 {% else %}
-                                    <a class="btn btn-outline-warning" style="height: 125px; width: 100px;" href="{% url 'team' pick.current_owner.pk %}">
+                                    <a class="btn btn-outline-warning" style="height: 105px; width: 100px;" href="{% url 'team' pick.current_owner.pk %}">
                                         {{pick.round}}.{{pick.number}}<br>
                                         {{pick.current_owner}}
                                     </a>

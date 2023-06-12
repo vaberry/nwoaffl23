@@ -37,5 +37,4 @@ def navbar_context(request):
         'user_team': user_team,
     }
 
-
     return context
