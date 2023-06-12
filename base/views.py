@@ -74,8 +74,14 @@ class Team(LoginRequiredMixin,View):
         if request.method == "GET":
             team = models.Team.objects.get(pk=kwargs.get('team_pk'))
             team_picks = models.Pick.objects.filter(current_owner=team).order_by('round', 'number')
-            finish_2023 = models.Pick.objects.filter(current_owner=team, year=2023).order_by('round', 'number')[10]
-            finish_2024 = models.Pick.objects.filter(current_owner=team, year=2024).order_by('round', 'number')[10]
+            try:
+                finish_2023 = models.Pick.objects.filter(current_owner=team, year=2023).order_by('round', 'number')[10]
+            except:
+                finish_2023 = models.Pick.objects.filter(current_owner=team, year=2023).order_by('round', 'number').last()
+            try:
+                finish_2024 = models.Pick.objects.filter(current_owner=team, year=2024).order_by('round', 'number')[10]
+            except:
+                finish_2024 = models.Pick.objects.filter(current_owner=team, year=2024).order_by('round', 'number').last()
             context = {
                 'picks' : team_picks,
                 'finish_2023' : finish_2023,
