@@ -7,6 +7,12 @@
     .pick-btn {
         width: 95%;
     }
+    .overflow-hidden {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
 </style>
 <div class="container mb-5">
     <div class="row">
@@ -94,7 +100,7 @@
                 <h3 class="text-center">Trade Card</h3>
                 <div class="row">
                     <div class="col text-center">
-                        <h5>{{trade.team_one}}</h5><hr>
+                        <h5 class="overflow-hidden">{{trade.team_one}}</h5><hr>
                         {% for pick in trade.team_one_sends.all %}
                         <div class="row">
                             <form action="" method="post">
@@ -110,7 +116,7 @@
                         {% endfor %}
                     </div>
                     <div class="col text-center">
-                        <h5>{{trade.team_two}}</h5><hr>
+                        <h5 class="overflow-hidden">{{trade.team_two}}</h5><hr>
                         {% for pick in trade.team_two_sends.all %}
                         <div class="row">
                             <form action="" method="post">
