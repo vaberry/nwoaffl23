@@ -47,7 +47,7 @@
             <h2 class="mb-3 md-md-0">Your Trades</h2><hr>
             <div class="container mb-3" style="max-height: 50vh; overflow-y: auto;">
                 {% for trade in user_trades %}
-                {% if not trade.status == 'STARTED' and trade.team_two.owner = user %}
+                {% if not trade.status == 'STARTED' and trade.team_two.owner == user %}
                 <a class="btn m-1
                         {% if trade.status == 'STARTED' %}btn-outline-primary
                         {% elif trade.status == 'PROPOSED' %}btn-outline-warning
