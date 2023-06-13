@@ -119,8 +119,8 @@ class TradeRoom(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         if request.method == "GET":
             trade = models.Trade.objects.get(pk=kwargs.get('trade_pk'))
-            team_one_picks = models.Pick.objects.filter(current_owner=trade.team_one)
-            team_two_picks = models.Pick.objects.filter(current_owner=trade.team_two)
+            team_one_picks = models.Pick.objects.filter(current_owner=trade.team_one).order_by('year', 'round', 'number')
+            team_two_picks = models.Pick.objects.filter(current_owner=trade.team_two).order_by('year', 'round', 'number')
 
             if trade.team_one.owner == request.user:
                 if trade.team_one.team_new_trade:
