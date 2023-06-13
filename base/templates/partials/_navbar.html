@@ -4,13 +4,22 @@
 
 <style>
     .nav-btn {
-        /* color: #fff; */
-        /* border-color: #fff; */
-        /* width: 100px; */
         border: none;
+        position: relative; /* Add this line */
+    }
+    .notification-circle {
+        position: absolute;
+        top: 1px;
+        right: 50px;
+        width: 10px;
+        height: 10px;
+        background-color: lightcoral;
+        border-radius: 50%;
     }
 </style>
 
+{{ user_team }}
+{{user_team.team_new_trade}}
 <link rel="stylesheet" href="{% static 'base/css/style.css' %}">
 <div class="container mt-3">
     <div class="row">
@@ -41,7 +50,7 @@
                         </li>
                         {% endif %}
                         <li class="nav-item">
-                            <a href="{% url 'trade-lobby' %}" class="nav-btn btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'trade-lobby' %}active{% elif request.resolver_match.view_name == 'trade-room' %}active{% endif %}">Trade</a>
+                            <a href="{% url 'trade-lobby' %}" class="nav-btn btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'trade-lobby' %}active{% elif request.resolver_match.view_name == 'trade-room' %}active{% endif %}">Trade{% if user_team.team_new_trade %}<span class="notification-circle"></span>{% endif %}</a>
                         </li>
                         <li class="nav-item">
                             <a href="{% url 'logout' %}" class="nav-btn btn btn-outline-secondary m-1 {% if request.resolver_match.view_name == 'logout' %}active{% endif %}">Logout</a>

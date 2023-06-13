@@ -121,6 +121,16 @@ class TradeRoom(LoginRequiredMixin,View):
             trade = models.Trade.objects.get(pk=kwargs.get('trade_pk'))
             team_one_picks = models.Pick.objects.filter(current_owner=trade.team_one)
             team_two_picks = models.Pick.objects.filter(current_owner=trade.team_two)
+
+            if trade.team_one.owner == request.user:
+                if trade.team_one.team_new_trade:
+                    trade.team_one.team_new_trade = False
+                    trade.team_one.save()
+            elif trade.team_two.owner == request.user:
+                if trade.team_two.team_new_trade:
+                    trade.team_two.team_new_trade = False
+                    trade.team_two.save()
+
             context = {
                 'trade': trade,
                 'team_one_picks': team_one_picks,
@@ -161,6 +171,16 @@ class TradeRoom(LoginRequiredMixin,View):
                     trade.current_proposer = trade.team_one
                     trade.team_one_accepted = False
                     trade.team_two_accepted = True
+
+                if trade.team_one.owner == request.user:
+                    trade.team_one.team_new_trade = False
+                    trade.team_two.team_new_trade = True
+                elif trade.team_two.owner == request.user:
+                    trade.team_one.team_new_trade = True
+                    trade.team_two.team_new_trade = False
+                trade.team_one.save()
+                trade.team_two.save()
+
                 trade.extra_details = request.POST.get('trade_details')
                 trade.save()
 
@@ -174,6 +194,16 @@ class TradeRoom(LoginRequiredMixin,View):
                 for pick in trade.team_two_sends.all():
                     pick.current_owner = trade.team_one
                     pick.save()
+
+                if trade.team_one.owner == request.user:
+                    trade.team_one.team_new_trade = False
+                    trade.team_two.team_new_trade = True
+                elif trade.team_two.owner == request.user:
+                    trade.team_one.team_new_trade = True
+                    trade.team_two.team_new_trade = False
+                trade.team_one.save()
+                trade.team_two.save()
+                
                 trade.extra_details = request.POST.get('trade_details')
                 trade.save()
             
@@ -188,6 +218,16 @@ class TradeRoom(LoginRequiredMixin,View):
                 trade.status = "REJECTED"
                 trade.team_one_accepted = False
                 trade.team_two_accepted = False
+
+                if trade.team_one.owner == request.user:
+                    trade.team_one.team_new_trade = False
+                    trade.team_two.team_new_trade = True
+                elif trade.team_two.owner == request.user:
+                    trade.team_one.team_new_trade = True
+                    trade.team_two.team_new_trade = False
+                trade.team_one.save()
+                trade.team_two.save()
+
                 trade.extra_details = request.POST.get('trade_details')
                 trade.save()
 

@@ -20,6 +20,7 @@ def navbar_context(request):
     user_team_pk = None
     user_team = None
     commissioner = None
+    
 
     if request.user.is_authenticated:
         user_team = Team.objects.filter(owner=request.user).first()

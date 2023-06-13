@@ -9,6 +9,7 @@ class Team(models.Model):
     commissioner = models.BooleanField(default=False)
     profile_picture = models.ImageField(upload_to='team_profile_pictures/', default='team_profile_pictures/person.svg')
     draft_order = models.IntegerField()
+    team_new_trade = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -59,6 +60,8 @@ class Trade(models.Model):
     team_two_sends = models.ManyToManyField(Pick, related_name='trade_team_two_sends')
     current_proposer = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='current_proposer', default=None, blank=True, null=True)
     extra_details = models.TextField(blank=True, null=True)
+    # team_one_viewed = models.BooleanField(default=True)
+    # team_two_viewed = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Trade ID: {self.pk}"
