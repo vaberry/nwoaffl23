@@ -54,8 +54,8 @@
                             <th>#</th>
                             {% for team in teams %}
                             <th class="text-center">
-                                <div class="m-3" style="height: 150px; overflow-y: hidden;">
-                                    <a class="no-decoration" href="{% url 'team' team.pk %}">
+                                <div class="m-3" style="height: 150px; overflow:scroll">
+                                    <a class="no-decoration" href="{% url 'team' team.pk %}" style="overflow:hidden; text-overflow: ellipsis;">
                                         <img class="team-pic mb-1" src="{% static pic_dict|get_dict_value:team.owner %}" alt=""><br>
                                         <p>{{team.name}}</p>
                                     </a>
@@ -72,12 +72,12 @@
                             {% if pick.round == i %}
                             <td class="text-center">
                                 {% if pick.original_owner == pick.current_owner %}
-                                    <a class="btn btn-outline-secondary" style="height: 105px; width: 100px;" href="{% url 'team' pick.original_owner.pk %}">
+                                    <a class="btn btn-outline-secondary" style="height: 105px; width: 100px; overflow:hidden; text-overflow: ellipsis;" href="{% url 'team' pick.original_owner.pk %}">
                                         {{pick.round}}.{{pick.number}}<br>
                                         {{pick.current_owner}}
                                     </a>
                                 {% else %}
-                                    <a class="btn btn-outline-warning" style="height: 105px; width: 100px;" href="{% url 'team' pick.current_owner.pk %}">
+                                    <a class="btn btn-outline-warning" style="height: 105px; width: 100px; overflow:hidden; text-overflow: ellipsis;" href="{% url 'team' pick.current_owner.pk %}">
                                         {{pick.round}}.{{pick.number}}<br>
                                         {{pick.current_owner}}
                                     </a>
