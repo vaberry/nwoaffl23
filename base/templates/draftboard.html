@@ -37,6 +37,14 @@
         color: inherit;
     }
 
+    .card-text {
+        font-size: 0.8rem;
+        height: 105px;
+        width: 85px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
 </style>
 
 <div class="container">
@@ -54,10 +62,10 @@
                             <th>#</th>
                             {% for team in teams %}
                             <th class="text-center">
-                                <div class="m-3" style="height: 150px; width: 100px;">
+                                <div class="" style="height: 150px; width: 80px;">
                                     <a class="no-decoration" href="{% url 'team' team.pk %}" style="text-overflow: ellipsis;">
                                         <img class="team-pic mb-1" src="{% static pic_dict|get_dict_value:team.owner %}" alt=""><br>
-                                        <p>{{team.name}}</p>
+                                        <p style="overflow: hidden; text-overflow: ellipsis">{{team.name}}</p>
                                     </a>
                                 </div>
                             </th>
@@ -72,14 +80,14 @@
                             {% if pick.round == i %}
                             <td class="text-center">
                                 {% if pick.original_owner == pick.current_owner %}
-                                    <a class="btn btn-outline-secondary" style="height: 105px; width: 100px; overflow:hidden; text-overflow: ellipsis;" href="{% url 'team' pick.original_owner.pk %}">
-                                        {{pick.round}}.{{pick.number}}<br>
-                                        {{pick.current_owner}}
+                                    <a class="btn btn-outline-secondary card-text" href="{% url 'team' pick.original_owner.pk %}">
+                                        <span>{{pick.round}}.{{pick.number}}</span><br>
+                                        <span>{{pick.current_owner}}</span>
                                     </a>
                                 {% else %}
-                                    <a class="btn btn-outline-warning" style="height: 105px; width: 100px; overflow:hidden; text-overflow: ellipsis;" href="{% url 'team' pick.current_owner.pk %}">
-                                        {{pick.round}}.{{pick.number}}<br>
-                                        {{pick.current_owner}}
+                                    <a class="btn btn-outline-warning card-text" href="{% url 'team' pick.current_owner.pk %}">
+                                        <span>{{pick.round}}.{{pick.number}}</span><br>
+                                        <span>{{pick.current_owner}}</span>
                                     </a>
                                 {% endif %}
                             </td>
