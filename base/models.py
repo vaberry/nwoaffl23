@@ -37,6 +37,7 @@ class Pick(models.Model):
     year = models.IntegerField()
     round = models.IntegerField()
     number = models.IntegerField()
+    selection = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return f"Year: {self.year}, Round: {self.round}, Number: {self.number}"
