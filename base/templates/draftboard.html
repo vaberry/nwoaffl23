@@ -5,23 +5,19 @@
 {% block content %}
 
 <style>
-    /* Hide the vertical scrollbar */
     ::-webkit-scrollbar {
       width: 0;
       height: 1em;
     }
 
-    /* Track */
     ::-webkit-scrollbar-track:vertical {
       background: transparent;
     }
 
-    /* Vertical Handle */
     ::-webkit-scrollbar-thumb {
       background: transparent;
     }
 
-    /* Show the horizontal scrollbar */
     ::-webkit-scrollbar-thumb:horizontal {
         background: lightblue
     }
@@ -38,17 +34,14 @@
     }
 
     .card-text {
-        /* font-size: 0.8rem; */
         height: 150px;
         width: 150px;
-        /* overflow: hidden; */
         overflow-x: hidden;
         overflow-y: scroll;
         text-overflow: ellipsis;
     }
 
     .card-top-text {
-        /* font-size: 0.8rem; */
         height: 50px;
         width: 150px;
         overflow: hidden;
@@ -59,14 +52,16 @@
 
 <div class="container">
     <div class="row">
-        <div class="col">
-            <h1 class="h1 text-center">2023 Draftboard</h1><hr>
+        <div class="col text-center">
+            <h1 class="h1">2023 Draftboard</h1>
+            <small><i>use < > arrows or scroll bar at the bottom to scroll</i></small>
+            <hr>
         </div>
     </div>
-    <div class="row overflow-scroll" style="height: 70vh;">
+    <div class="row overflow-scroll" style="height: 60vh;">
         <div class="col">
-            <div class="container mb-3">
-                <table class="table-responsive table-striped">
+            <div class="container mb-3 scrollable-container">
+                <table class="table-responsive table-striped scrollable-content">
                     <thead>
                         <tr>
                             <th>#</th>
