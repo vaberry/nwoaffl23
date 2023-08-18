@@ -5,26 +5,7 @@
 {% block content %}
 
 <style>
-    /* Hide the vertical scrollbar */
-    ::-webkit-scrollbar {
-      width: 0;
-      height: 1.5em;
-    }
-
-    /* Track */
-    ::-webkit-scrollbar-track:vertical {
-      background: transparent;
-    }
-
-    /* Vertical Handle */
-    ::-webkit-scrollbar-thumb {
-      background: transparent;
-    }
-
-    /* Show the horizontal scrollbar */
-    ::-webkit-scrollbar-thumb:horizontal {
-        background: lightblue
-    }
+ 
 
     .team-pic {
         width: 60px !important;
@@ -38,9 +19,17 @@
     }
 
     .card-text {
-        font-size: 0.8rem;
-        height: 105px;
-        width: 85px;
+        /* font-size: 0.8rem; */
+        height: 150px;
+        width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .card-top-text {
+        /* font-size: 0.8rem; */
+        height: 50px;
+        width: 150px;
         overflow: hidden;
         text-overflow: ellipsis;
     }
@@ -53,7 +42,7 @@
             <h1 class="h1 text-center">2023 Draftboard</h1><hr>
         </div>
     </div>
-    <div class="row" style="width: 100%; height: 70vh; overflow: scroll;">
+    <div class="row overflow-scroll">
         <div class="col">
             <div class="container mb-3">
                 <table class="table-responsive table-striped">
@@ -62,10 +51,10 @@
                             <th>#</th>
                             {% for team in teams %}
                             <th class="text-center">
-                                <div class="" style="height: 150px; width: 80px;">
-                                    <a class="no-decoration" href="{% url 'team' team.pk %}" style="text-overflow: ellipsis;">
+                                <div class="">
+                                    <a class="no-decoration" href="{% url 'team' team.pk %}">
                                         <img class="team-pic mb-1" src="{% static pic_dict|get_dict_value:team.owner %}" alt=""><br>
-                                        <p style="overflow: hidden; text-overflow: ellipsis">{{team.name}}</p>
+                                        <p class="card-top-text">{{team.name}}</p>
                                     </a>
                                 </div>
                             </th>
@@ -80,8 +69,11 @@
                             {% if pick.round == i %}
                             <td class="text-center">
                                 {% if pick.original_owner == pick.current_owner %}
-                                    <a class="btn btn-outline-secondary card-text" href="{% url 'team' pick.original_owner.pk %}">
+                                    <a class="btn btn-outline-secondary card-text overflow-auto" href="{% url 'team' pick.original_owner.pk %}">
                                         <span>{{pick.round}}.{{pick.number}}</span><br>
+                                        {% if pick.selection %}
+                                            <span class="text-success">{{pick.selection}}</span><hr>
+                                        {% endif %}
                                         <span>{{pick.current_owner}}</span>
                                     </a>
                                 {% else %}

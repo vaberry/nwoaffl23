@@ -50,10 +50,13 @@ class Commissioner(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         if request.method == "GET":
             create_team_form = forms.TeamCreationForm()
+            update_selection_form = forms.AddSelectionForm()
             teams = models.Team.objects.all()
+            picks = models.Pick.objects.filter(year='2023', selection=None).order_by('round', 'number')
             context = {
                 'create_team_form': create_team_form,
                 'teams': teams,
+                'picks': picks,
             }
             return render(request, 'commissioner.html', context=context)
         
@@ -65,8 +68,13 @@ class Commissioner(LoginRequiredMixin,View):
                     create_team_form.save()
                 else:
                     create_team_form = forms.TeamCreationForm()
-            elif "update-draft-order" in request.POST:
-                pass
+            elif "update-selection" in request.POST:
+                pk = request.POST.get('pick')
+                pick = models.Pick.objects.get(pk=pk)
+                print(pk)
+                selection = request.POST.get('selection')
+                pick.selection = selection
+                pick.save()
         return redirect('commissioner')
 
 class Team(LoginRequiredMixin,View):
@@ -238,7 +246,7 @@ class TradeRoom(LoginRequiredMixin,View):
             
             return redirect('trade-room', trade_pk=trade.pk)
 
-class Draftboard(LoginRequiredMixin,View):
+class Draftboard(View):
     def get(self, request, *args, **kwargs):
         if request.method == "GET":
             picks_2023 = models.Pick.objects.filter(year=2023).order_by('round', 'number')

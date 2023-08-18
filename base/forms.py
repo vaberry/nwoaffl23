@@ -1,5 +1,6 @@
+from typing import Any
 from django import forms
-from .models import Team
+from .models import Team, Pick
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -32,3 +33,8 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
+
+class AddSelectionForm(forms.ModelForm):
+    class Meta:
+        model = Pick
+        fields = ['year', 'round', 'number', 'selection']
