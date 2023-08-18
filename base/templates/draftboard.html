@@ -54,7 +54,7 @@
                             <th>#</th>
                             {% for team in teams %}
                             <th class="text-center">
-                                <div class="m-3" style="height: 150px; overflow:scroll">
+                                <div class="m-3" style="height: 150px; width: 100px;">
                                     <a class="no-decoration" href="{% url 'team' team.pk %}" style="text-overflow: ellipsis;">
                                         <img class="team-pic mb-1" src="{% static pic_dict|get_dict_value:team.owner %}" alt=""><br>
                                         <p>{{team.name}}</p>
