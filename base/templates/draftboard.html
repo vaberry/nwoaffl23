@@ -5,26 +5,26 @@
 {% block content %}
 
 <style>
-    /* Hide the vertical scrollbar
+    /* Hide the vertical scrollbar */
     ::-webkit-scrollbar {
       width: 0;
-      height: 1.5em;
-    } */
+      height: 1em;
+    }
 
     /* Track */
-    /* ::-webkit-scrollbar-track:vertical {
+    ::-webkit-scrollbar-track:vertical {
       background: transparent;
-    } */
+    }
 
     /* Vertical Handle */
-    /* ::-webkit-scrollbar-thumb {
+    ::-webkit-scrollbar-thumb {
       background: transparent;
-    } */
+    }
 
     /* Show the horizontal scrollbar */
-    /* ::-webkit-scrollbar-thumb:horizontal {
+    ::-webkit-scrollbar-thumb:horizontal {
         background: lightblue
-    } */
+    }
 
     .team-pic {
         width: 60px !important;
@@ -41,7 +41,9 @@
         /* font-size: 0.8rem; */
         height: 150px;
         width: 150px;
-        overflow: hidden;
+        /* overflow: hidden; */
+        overflow-x: hidden;
+        overflow-y: scroll;
         text-overflow: ellipsis;
     }
 
@@ -61,7 +63,7 @@
             <h1 class="h1 text-center">2023 Draftboard</h1><hr>
         </div>
     </div>
-    <div class="row overflow-scroll">
+    <div class="row overflow-scroll" style="height: 70vh;">
         <div class="col">
             <div class="container mb-3">
                 <table class="table-responsive table-striped">
@@ -88,7 +90,7 @@
                             {% if pick.round == i %}
                             <td class="text-center">
                                 {% if pick.original_owner == pick.current_owner %}
-                                    <a class="btn btn-outline-secondary card-text overflow-auto" href="{% url 'team' pick.original_owner.pk %}">
+                                    <a class="btn btn-outline-secondary card-text" href="{% url 'team' pick.original_owner.pk %}">
                                         <span>{{pick.round}}.{{pick.number}}</span><br>
                                         {% if pick.selection %}
                                             <span class="text-success">{{pick.selection}}</span><hr>
