@@ -56,12 +56,11 @@
             {% if pick.year == 2023 %}
             <div class="row">
                 <div class="col-12">
-                    <h5 class="overflow-hidden">{{pick.selection}}<span class="{% if pick.current_owner != pick.original_owner %}text-warning{% else %}text-secondary{% endif %}"> - ({{pick.original_owner}})</span></h5>
-                    <!-- <h5 class="overflow-hidden">{{pick.round}}.{{pick.number}} - {{pick.selection}}<span class="{% if pick.current_owner != pick.original_owner %}text-warning{% else %}text-secondary{% endif %}"> - ({{pick.original_owner}})</span></h5>
+                    <h5 class="overflow-hidden">{{pick.round}}.{{pick.number}} - {{pick.selection}}<span class="{% if pick.current_owner != pick.original_owner %}text-warning{% else %}text-secondary{% endif %}"> - ({{pick.original_owner}})</span></h5>
                     {% if pick == finish_2023 %}
                     <div class="line-break">
                         <span>projected draft finish</span>
-                    </div> -->
+                    </div>
                     {% endif %}
                 </div>
             </div>
