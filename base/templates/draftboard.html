@@ -88,7 +88,7 @@
                                     <a class="btn btn-outline-secondary card-text" href="{% url 'team' pick.original_owner.pk %}">
                                         <span>{{pick.round}}.{{pick.number}}</span><br>
                                         {% if pick.selection %}
-                                            <span class="text-success">{{pick.selection}}</span><hr>
+                                            <span class="text-success bg-white">{{pick.selection}}</span><hr>
                                         {% endif %}
                                         <span>{{pick.current_owner}}</span>
                                     </a>
@@ -96,7 +96,7 @@
                                     <a class="btn btn-outline-warning card-text" href="{% url 'team' pick.current_owner.pk %}">
                                         <span>{{pick.round}}.{{pick.number}}</span><br>
                                         {% if pick.selection %}
-                                            <span class="text-success">{{pick.selection}}</span><hr>
+                                            <span class="text-success bg-white">{{pick.selection}}</span><hr>
                                         {% endif %}
                                         <span>{{pick.current_owner}}</span>
                                     </a>
